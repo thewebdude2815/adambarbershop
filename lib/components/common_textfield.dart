@@ -43,7 +43,8 @@ class CommonTextFieldNew extends StatefulWidget {
     this.cursorColor,
     this.autoFocused,
     this.onFieldSubmit,
-    this.prefixWidget,
+    this.image,
+    this.textAlign,
     this.hintDirection,
     this.textDirection,
     this.focusNode,
@@ -60,8 +61,9 @@ class CommonTextFieldNew extends StatefulWidget {
   final String? labelText, outerLabel;
   final String? initialText;
   final String? suffixSvg, prefixSvg;
-  final Widget? prefixWidget;
+  final String? image;
   final String? hintText;
+  TextAlign? textAlign;
   final String? prefixText;
   final int? maxLines;
   TextDirection? hintDirection;
@@ -99,29 +101,42 @@ class _CommonTextFieldNewState extends State<CommonTextFieldNew> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         widget.outerLabel == null
             ? const SizedBox()
             : Text(
                 widget.outerLabel ?? "",
-                style: AppTextStyle.bodyBold24.copyWith(
+                style: AppTextStyle.bodyNormal12.copyWith(
                     color: AppColors.kMainColor,
+                    fontWeight: FontWeight.w600,
                     fontSize: MediaQuery.of(context).orientation ==
                             Orientation.portrait
-                        ? 24.sp
-                        : 14.sp),
+                        ? 16.sp
+                        : 8.sp),
               ),
         widget.outerLabel == null
             ? const SizedBox()
             : SizedBox(
-                height: 8.h,
+                height: 4.h,
               ),
         Container(
-          height: 48.h,
+          height: MediaQuery.of(context).orientation == Orientation.portrait
+              ? 48.h
+              : 100.h,
           decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                offset: const Offset(0, 2),
+                blurRadius: 4.sp,
+                spreadRadius: 2.sp,
+              ),
+            ],
             borderRadius: BorderRadius.circular(
-              12.r,
+              MediaQuery.of(context).orientation == Orientation.portrait
+                  ? 8.r
+                  : 16.r,
             ),
             border: Border.all(
                 color: const Color(0xffa1a1a1).withOpacity(0.6), width: 2.h),
@@ -137,7 +152,9 @@ class _CommonTextFieldNewState extends State<CommonTextFieldNew> {
             height: 45.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
-                12.r,
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 5.r
+                    : 12.r,
               ),
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -147,183 +164,212 @@ class _CommonTextFieldNewState extends State<CommonTextFieldNew> {
                     const Color(0xffffffff)
                   ]),
             ),
-            child: TextFormField(
-              textInputAction: widget.textInputAction,
-              textDirection: widget.textDirection,
-              maxLines: widget.obscure ?? false ? 1 : widget.maxLines ?? 1,
-              enabled: widget.enabled,
-              initialValue: widget.initialText,
-              controller: widget.controller,
-              // textDirection: TextDirection.rtl,
-              // style: widget.textStyle ??
-              //     AppTextStyle.componentTextStyle.copyWith(
-              //       color: AppColors.kWhiteColor,
-              //       height: 1.6,
-              //     ),
-              obscureText: (widget.obscure ?? false) ? hidePassword : false,
-              onChanged: widget.onChanged,
-              cursorColor: widget.cursorColor ?? AppColors.kSecondaryColor,
-              autovalidateMode: widget.autoValidateMode,
-              inputFormatters: widget.inputFormatters,
-              autofocus: widget.autoFocused ?? false,
-              focusNode: widget.focusNode,
-              textCapitalization:
-                  widget.capitalization ?? TextCapitalization.sentences,
-              keyboardType: widget.inputType,
-              style: widget.textStyle ??
-                  AppTextStyle.bodyNormal16
-                      .copyWith(color: AppColors.kSecondaryColor),
-              decoration: InputDecoration(
-                isDense: widget.isDense ?? true,
-                fillColor: Colors.transparent,
-                filled: widget.filled,
-                border: InputBorder.none,
-                // focusedBorder: widget.disableBorder == true
-                //     ? InputBorder.none
-                //     : OutlineInputBorder(
-                //         borderSide: BorderSide(
-                //           color: AppColors.kBlackColor,
-                //           width: 1.h,
-                //         ),
-                //         borderRadius:
-                //             BorderRadius.circular(widget.borderRadius ?? 5.r),
-                //       ),
-                hintStyle: widget.hintStyle ??
-                    AppTextStyle.bodyNormal16
-                        .copyWith(color: AppColors.kSecondaryColor),
-                hintTextDirection: widget.hintDirection,
-                contentPadding: widget.contentPadding ??
-                    EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
-                            ? 16.w
-                            : 12.w,
-                        vertical: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
-                            ? 8.h
-                            : 16.h),
-                // enabledBorder: widget.disableBorder == true
-                //     ? InputBorder.none
-                //     : OutlineInputBorder(
-                //         borderSide: BorderSide(
-                //           color: AppColors.kBlackColor,
-                //           width: 1.h,
-                //         ),
-                //         borderRadius:
-                //             BorderRadius.circular(widget.borderRadius ?? 5.r),
-                //       ),
-                // border: widget.disableBorder == true
-                //     ? InputBorder.none
-                //     : OutlineInputBorder(
-                //         borderSide: BorderSide(
-                //           color: AppColors.kBlackColor,
-                //           width: 1.h,
-                //         ),
-                //         borderRadius:
-                //             BorderRadius.circular(widget.borderRadius ?? 5.r),
-                //       ),
-                // errorBorder: widget.disableBorder == true
-                //     ? InputBorder.none
-                //     : OutlineInputBorder(
-                //         borderRadius:
-                //             BorderRadius.circular(widget.borderRadius ?? 5.r),
-                //         borderSide: BorderSide(
-                //           color: AppColors.kBlackColor,
-                //           width: 1.h,
-                //         ),
-                //       ),
-                // focusedErrorBorder: OutlineInputBorder(
-                //   borderSide: BorderSide(
-                //     color: AppColors.kBlackColor,
-                //     width: 1.h,
-                //   ),
-                //   borderRadius: BorderRadius.circular(widget.borderRadius ?? 5.r),
-                // ),
-                // errorStyle: AppTextStyle.fieldErrorTextStyle,
-                alignLabelWithHint: true,
-                labelText: widget.labelText,
-                hintText: widget.hintText,
-                prefixIcon: widget.prefixSvg != null
-                    ? Padding(
-                        padding: widget.prefixPadding ??
-                            EdgeInsets.only(
-                              top: 6.h,
-                              bottom: 6.h,
-                              left: 6.w,
-                            ),
-                        child: IconButton(
-                          onPressed: widget.prefixOnTap,
-                          splashRadius: 20.h,
-                          icon: SvgPicture.asset(
-                            widget.prefixSvg!,
-                            height: widget.prefixHeight != null
-                                ? widget.prefixHeight!.h
-                                : 24.h,
-                            width: widget.prefixWidth != null
-                                ? widget.prefixWidth!.h
-                                : 24.h,
-                            color: widget.prefixIconColor ??
-                                AppColors.kSecondaryColor,
-                            //   color: widget.focusNode != null
-                            //       ? widget.focusNode!.hasFocus
-                            //           ? AppColors.mainkSecondaryColor90
-                            //           :AppColors.mainBlack60
-                            //       : widget.prefixIconColor??AppColors.mainBlack60,
-                          ),
+            child: Row(
+              children: [
+                widget.image == null
+                    ? const SizedBox()
+                    : Padding(
+                        padding: EdgeInsets.only(
+                          left: 12.h,
                         ),
-                      )
-                    : null,
-                // suffixIcon: widget.obscure == true
-                //     ? Padding(
-                //         padding: EdgeInsets.only(right: 4.w),
-                //         child: IconButton(
-                //           onPressed: () {
-                //             setState(() {
-                //               if (hidePassword) {
-                //                 hidePassword = false;
-                //               } else {
-                //                 hidePassword = true;
-                //               }
-                //             });
-                //           },
-                //           splashRadius: 20.h,
-                //           icon: SvgPicture.asset(
-                //             hidePassword ? AppAssets.eyeSlashSvg : AppAssets.eyeSvg,
-                //             height: 20.h,
-                //             width: 20.w,
-                //             color: AppColors.kSecondaryColor,
-                //           ),
-                //           color: AppColors.kSecondaryColor,
-                //         ),
-                //       )
-                //     : widget.suffixSvg != null
-                //         ? Padding(
-                //             padding:
-                //                 widget.suffixPadding ?? EdgeInsets.only(right: 4.w),
-                //             child: IconButton(
-                //               onPressed: widget.suffixOnTap,
-                //               splashRadius: 20.h,
-                //               icon: SvgPicture.asset(
-                //                 widget.suffixSvg!,
-                //                 height: widget.suffixHeight != null
-                //                     ? widget.suffixHeight!.h
-                //                     : 24.h,
-                //                 width: widget.suffixWidth != null
-                //                     ? widget.suffixWidth!.h
-                //                     : 24.w,
-                //                 color:
-                //                     widget.suffixIconColor ?? AppColors.kWhiteColor,
-                //               ),
-                //               color: AppColors.kWhiteColor,
-                //             ),
-                //           )
-                //         : null,
-              ),
-              readOnly: widget.readOnly ?? false,
-              onSaved: widget.onSaved,
-              validator: widget.validator,
-              onTap: widget.onTap,
-              onFieldSubmitted: widget.onFieldSubmit,
+                        child: Image.asset(
+                          widget.image!,
+                          height: MediaQuery.of(context).orientation ==
+                                  Orientation.portrait
+                              ? 25.h
+                              : 35.h,
+                          width: 25.w,
+                        ),
+                      ),
+                Expanded(
+                  child: TextFormField(
+                    textInputAction: widget.textInputAction,
+                    textDirection: widget.textDirection,
+                    textAlign: widget.textAlign == null
+                        ? TextAlign.start
+                        : widget.textAlign!,
+                    maxLines:
+                        widget.obscure ?? false ? 1 : widget.maxLines ?? 1,
+                    enabled: widget.enabled,
+                    initialValue: widget.initialText,
+                    controller: widget.controller,
+                    // textDirection: TextDirection.rtl,
+                    // style: widget.textStyle ??
+                    //     AppTextStyle.componentTextStyle.copyWith(
+                    //       color: AppColors.kWhiteColor,
+                    //       height: 1.6,
+                    //     ),
+                    obscureText:
+                        (widget.obscure ?? false) ? hidePassword : false,
+                    onChanged: widget.onChanged,
+
+                    cursorColor:
+                        widget.cursorColor ?? AppColors.kSecondaryColor,
+                    autovalidateMode: widget.autoValidateMode,
+                    inputFormatters: widget.inputFormatters,
+                    autofocus: widget.autoFocused ?? false,
+                    focusNode: widget.focusNode,
+
+                    textCapitalization:
+                        widget.capitalization ?? TextCapitalization.sentences,
+                    keyboardType: widget.inputType,
+                    style: widget.textStyle ??
+                        AppTextStyle.bodyNormal16
+                            .copyWith(color: AppColors.kSecondaryColor),
+                    decoration: InputDecoration(
+                      isDense: widget.isDense ?? true,
+                      fillColor: Colors.transparent,
+                      filled: widget.filled,
+                      border: InputBorder.none,
+                      // focusedBorder: widget.disableBorder == true
+                      //     ? InputBorder.none
+                      //     : OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //           color: AppColors.kBlackColor,
+                      //           width: 1.h,
+                      //         ),
+                      //         borderRadius:
+                      //             BorderRadius.circular(widget.borderRadius ?? 5.r),
+                      //       ),
+                      hintStyle: widget.hintStyle ??
+                          AppTextStyle.bodyNormal16
+                              .copyWith(color: AppColors.kSecondaryColor),
+                      hintTextDirection: widget.hintDirection,
+                      contentPadding: widget.contentPadding ??
+                          EdgeInsets.symmetric(
+                              horizontal: MediaQuery.of(context).orientation ==
+                                      Orientation.portrait
+                                  ? 16.w
+                                  : 12.w,
+                              vertical: MediaQuery.of(context).orientation ==
+                                      Orientation.portrait
+                                  ? 8.h
+                                  : 16.h),
+                      // enabledBorder: widget.disableBorder == true
+                      //     ? InputBorder.none
+                      //     : OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //           color: AppColors.kBlackColor,
+                      //           width: 1.h,
+                      //         ),
+                      //         borderRadius:
+                      //             BorderRadius.circular(widget.borderRadius ?? 5.r),
+                      //       ),
+                      // border: widget.disableBorder == true
+                      //     ? InputBorder.none
+                      //     : OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //           color: AppColors.kBlackColor,
+                      //           width: 1.h,
+                      //         ),
+                      //         borderRadius:
+                      //             BorderRadius.circular(widget.borderRadius ?? 5.r),
+                      //       ),
+                      // errorBorder: widget.disableBorder == true
+                      //     ? InputBorder.none
+                      //     : OutlineInputBorder(
+                      //         borderRadius:
+                      //             BorderRadius.circular(widget.borderRadius ?? 5.r),
+                      //         borderSide: BorderSide(
+                      //           color: AppColors.kBlackColor,
+                      //           width: 1.h,
+                      //         ),
+                      //       ),
+                      // focusedErrorBorder: OutlineInputBorder(
+                      //   borderSide: BorderSide(
+                      //     color: AppColors.kBlackColor,
+                      //     width: 1.h,
+                      //   ),
+                      //   borderRadius: BorderRadius.circular(widget.borderRadius ?? 5.r),
+                      // ),
+                      // errorStyle: AppTextStyle.fieldErrorTextStyle,
+                      alignLabelWithHint: true,
+                      labelText: widget.labelText,
+                      hintText: widget.hintText,
+                      prefixIcon: widget.prefixSvg != null
+                          ? Padding(
+                              padding: widget.prefixPadding ??
+                                  EdgeInsets.only(
+                                    top: 6.h,
+                                    bottom: 6.h,
+                                    left: 6.w,
+                                  ),
+                              child: IconButton(
+                                onPressed: widget.prefixOnTap,
+                                splashRadius: 20.h,
+                                icon: SvgPicture.asset(
+                                  widget.prefixSvg!,
+                                  height: widget.prefixHeight != null
+                                      ? widget.prefixHeight!.h
+                                      : 32.h,
+                                  width: widget.prefixWidth != null
+                                      ? widget.prefixWidth!.h
+                                      : 32.h,
+                                  color: widget.prefixIconColor ??
+                                      AppColors.kSecondaryColor,
+                                  //   color: widget.focusNode != null
+                                  //       ? widget.focusNode!.hasFocus
+                                  //           ? AppColors.mainkSecondaryColor90
+                                  //           :AppColors.mainBlack60
+                                  //       : widget.prefixIconColor??AppColors.mainBlack60,
+                                ),
+                              ),
+                            )
+                          : null,
+                      // suffixIcon: widget.obscure == true
+                      //     ? Padding(
+                      //         padding: EdgeInsets.only(right: 4.w),
+                      //         child: IconButton(
+                      //           onPressed: () {
+                      //             setState(() {
+                      //               if (hidePassword) {
+                      //                 hidePassword = false;
+                      //               } else {
+                      //                 hidePassword = true;
+                      //               }
+                      //             });
+                      //           },
+                      //           splashRadius: 20.h,
+                      //           icon: SvgPicture.asset(
+                      //             hidePassword ? AppAssets.eyeSlashSvg : AppAssets.eyeSvg,
+                      //             height: 20.h,
+                      //             width: 20.w,
+                      //             color: AppColors.kSecondaryColor,
+                      //           ),
+                      //           color: AppColors.kSecondaryColor,
+                      //         ),
+                      //       )
+                      //     : widget.suffixSvg != null
+                      //         ? Padding(
+                      //             padding:
+                      //                 widget.suffixPadding ?? EdgeInsets.only(right: 4.w),
+                      //             child: IconButton(
+                      //               onPressed: widget.suffixOnTap,
+                      //               splashRadius: 20.h,
+                      //               icon: SvgPicture.asset(
+                      //                 widget.suffixSvg!,
+                      //                 height: widget.suffixHeight != null
+                      //                     ? widget.suffixHeight!.h
+                      //                     : 24.h,
+                      //                 width: widget.suffixWidth != null
+                      //                     ? widget.suffixWidth!.h
+                      //                     : 24.w,
+                      //                 color:
+                      //                     widget.suffixIconColor ?? AppColors.kWhiteColor,
+                      //               ),
+                      //               color: AppColors.kWhiteColor,
+                      //             ),
+                      //           )
+                      //         : null,
+                    ),
+                    readOnly: widget.readOnly ?? false,
+                    onSaved: widget.onSaved,
+                    validator: widget.validator,
+                    onTap: widget.onTap,
+                    onFieldSubmitted: widget.onFieldSubmit,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

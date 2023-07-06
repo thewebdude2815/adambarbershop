@@ -9,4 +9,5 @@ class AppColors {
   static const Color kSplashColor = Color(0xFFd59647);
   static const Color kBlackColor = Color(0xFF000000);
   static const Color kWhiteColor = Color(0xFFFFFFFF);
+  static const Color khintcolor = Color(0xFF5E5E5E);
 }
