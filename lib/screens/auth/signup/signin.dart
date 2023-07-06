@@ -21,29 +21,30 @@ class _SigninState extends State<Signin> {
     return Scaffold(
       backgroundColor: AppColors.kWhiteColor,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal:
-                MediaQuery.of(context).orientation == Orientation.portrait
-                    ? 0.h
-                    : 24.h,
-          ),
-          child: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage(
-                AppAssets.bgImage,
-              ),
-              fit: BoxFit.cover,
-            )),
+        child: Container(
+          height: double.infinity,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage(
+              AppAssets.bgImage,
+            ),
+            fit: BoxFit.cover,
+          )),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal:
+                  MediaQuery.of(context).orientation == Orientation.portrait
+                      ? 0.h
+                      : 24.h,
+            ),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).orientation ==
                             Orientation.portrait
-                        ? 40.h
-                        : 60.h,
+                        ? 20.h
+                        : 40.h,
                   ),
                   Center(
                     child: Image.asset(
@@ -198,7 +199,7 @@ class _SigninState extends State<Signin> {
                         : 32.h,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.h),
+                    padding: EdgeInsets.symmetric(horizontal: 19.w),
                     child: Row(
                       children: [
                         Expanded(
@@ -240,7 +241,7 @@ class _SigninState extends State<Signin> {
                         : 32.h,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.h),
+                    padding: EdgeInsets.symmetric(horizontal: 19.w),
                     child: Row(
                       children: [
                         Expanded(
@@ -309,7 +310,7 @@ class _SigninState extends State<Signin> {
                         : 32.h,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.h),
+                    padding: EdgeInsets.symmetric(horizontal: 19.w),
                     child: CommonTextFieldNew(
                       textStyle: GoogleFonts.poppins(
                         color: AppColors.khintcolor,
@@ -334,7 +335,7 @@ class _SigninState extends State<Signin> {
                         : 32.h,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.h),
+                    padding: EdgeInsets.symmetric(horizontal: 19.w),
                     child: CommonTextFieldNew(
                       textStyle: GoogleFonts.poppins(
                         color: AppColors.khintcolor,
@@ -356,11 +357,16 @@ class _SigninState extends State<Signin> {
                   SizedBox(
                     height: MediaQuery.of(context).orientation ==
                             Orientation.portrait
-                        ? 24.h
+                        ? 18.h
                         : 50.h,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.h),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 19.w,
+                        vertical: MediaQuery.of(context).orientation ==
+                                Orientation.portrait
+                            ? 8.h
+                            : 40.h),
                     child: Container(
                       height: MediaQuery.of(context).orientation ==
                               Orientation.portrait
@@ -394,7 +400,6 @@ class _SigninState extends State<Signin> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.h),
                 ],
               ),
             ),
